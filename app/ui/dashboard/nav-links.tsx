@@ -5,9 +5,10 @@ import {
   HomeIcon,
   DocumentDuplicateIcon,
 } from '@heroicons/react/24/outline';
-import clsx from 'clsx';
+import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { Button } from '@/components/ui/button';
 
 // Map of links to display in the side navigation.
 // Depending on the size of the application, this would be stored in a database.
@@ -29,17 +30,17 @@ export default function NavLinks() {
       {links.map((link) => {
         const LinkIcon = link.icon;
         return (
-          <Link
+          <Button
             key={link.name}
-            href={link.href}
-            className={clsx("flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3",
-              {
-                'bg-sky-100 text-blue-600': pathName === link.href
-              }
-        )}>
-            <LinkIcon className="w-6" />
-            <p className="hidden md:block">{link.name}</p>
-          </Link>
+            variant={pathName === link.href ? "secondary" : "ghost"}
+            asChild
+            className="w-full justify-start"
+          >
+            <Link href={link.href}>
+              <LinkIcon className="mr-2 h-4 w-4" />
+              <span className="hidden md:inline">{link.name}</span>
+            </Link>
+          </Button>
         );
       })}
     </>
